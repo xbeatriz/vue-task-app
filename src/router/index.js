@@ -21,8 +21,7 @@ const router = createRouter({
       path: '/tasks',
       name: 'createTask',
       component: TasksView,
-    }
-    ,
+    },
     {
       path: '/tasks/:id',
       name: 'tasksDetails',
@@ -44,4 +43,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export default router
+export default router; // ✅ Certifique-se de que esta linha está no final!

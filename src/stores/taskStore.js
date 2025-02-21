@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+/* import { routes } from '@/router/index'; */
+import  router  from '@/router';
 
 export const useTaskStore = defineStore('taskStore', {
   state: () => ({
@@ -45,9 +47,31 @@ export const useTaskStore = defineStore('taskStore', {
       this.tasks.push(task);
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
     },
-    deleteTask(taskId) {
+    //?Ação para fazer o delete da task sem precisar estar logado
+   /*  deleteTask(taskId) {
       this.tasks = this.tasks.filter(task => task.id !== taskId);
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    },
+    }, */
+    //?Ação para fazer o delete da task com a verificação de estar logado
+   /*  deleteTask(taskId) {
+      if (!this.authenticated) {
+        throw new Error('User not authenticated');
+      }
+      this.tasks = this.tasks.filter(task => task.id !== taskId);
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }, */
+    //?Ação para fazer o delete da task com a verificação de estar logado e redirecionar para a rota de login
+    deleteTask(taskId) {
+      console.log('Router:', router); // Verifica se o router está sendo importado corretamente
+      const isAuthenticated = localStorage.getItem('authenticated'); 
+if (!isAuthenticated) { 
+        alert('Você precisa estar logado para deletar uma tarefa.');
+        router.push('/login'); // Redireciona para a rota de login corretamente
+        return;
+      }
+      this.tasks = this.tasks.filter(task => task.id !== taskId);
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
+    
   },
 });
